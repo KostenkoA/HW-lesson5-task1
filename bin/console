@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use App\Storage\KeyValueStorage;
+
+//memory storage
+$data = new KeyValueStorage();
+$data->set('monday',1);
+$data->set('tuesday',2);
+$data->set('wednesday',3);
+var_dump($data->get('tuesday'));
+var_dump($data->has('wednesday'));
+$data->remove('monday');
+var_dump($data);
+$data->clear();
+var_dump($data);
