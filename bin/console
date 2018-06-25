@@ -6,7 +6,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use App\Storage\{
     KeyValueStorage,
-    KeyValueStorageYaml
+    KeyValueStorageYaml,
+    KeyValueStorageJson
 };
 
 //memory storage
@@ -30,3 +31,13 @@ var_dump($dataYaml->get('monday'));
 var_dump($dataYaml->has('wednesday'));
 $dataYaml->remove('monday');
 $dataYaml->clear();
+
+//Json storage
+$dataJson = new KeyValueStorageJson();
+$dataJson->set('monday',10);
+$dataJson->set('tuesday',24);
+$dataJson->set('wednesday',54);
+var_dump($dataJson->get('tuesday'));
+var_dump($dataJson->has('monday'));
+$dataJson->remove('wednesday');
+$dataJson->clear();
