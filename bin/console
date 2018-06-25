@@ -33,7 +33,7 @@ $dataYaml->remove('monday');
 $dataYaml->clear();
 
 //Json storage
-$dataJson = new KeyValueStorageJson();
+$dataJson = new KeyValueStorageJson('./Storage/KeyValueStorage.json');
 $dataJson->set('monday',10);
 $dataJson->set('tuesday',24);
 $dataJson->set('wednesday',54);
