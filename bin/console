@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Storage\KeyValueStorage;
+use App\Storage\{
+    KeyValueStorage,
+    KeyValueStorageYaml
+};
 
 //memory storage
 $data = new KeyValueStorage();
@@ -17,3 +20,13 @@ $data->remove('monday');
 var_dump($data);
 $data->clear();
 var_dump($data);
+
+//Yaml storage
+$dataYaml = new KeyValueStorageYaml();
+$dataYaml->set('monday',410);
+$dataYaml->set('tuesday',131);
+$dataYaml->set('wednesday',555);
+var_dump($dataYaml->get('monday'));
+var_dump($dataYaml->has('wednesday'));
+$dataYaml->remove('monday');
+$dataYaml->clear();
