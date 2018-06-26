@@ -2,7 +2,6 @@
 
 namespace App\Storage;
 
-
 class KeyValueStorage implements KeyValueStorageInterface
 {
 

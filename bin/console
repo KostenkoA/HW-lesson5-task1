@@ -15,15 +15,16 @@ $data = new KeyValueStorage();
 $data->set('monday',1);
 $data->set('tuesday',2);
 $data->set('wednesday',3);
+$data->set('monday',6);
 var_dump($data->get('tuesday'));
 var_dump($data->has('wednesday'));
 $data->remove('monday');
 var_dump($data);
-$data->clear();
-var_dump($data);
+//$data->clear();
+//var_dump($data);
 
 //Yaml storage
-$dataYaml = new KeyValueStorageYaml();
+$dataYaml = new KeyValueStorageYaml('./storage/KeyValueStorage.yaml');
 $dataYaml->set('monday',410);
 $dataYaml->set('tuesday',131);
 $dataYaml->set('wednesday',555);
@@ -33,7 +34,7 @@ $dataYaml->remove('monday');
 $dataYaml->clear();
 
 //Json storage
-$dataJson = new KeyValueStorageJson('./Storage/KeyValueStorage.json');
+$dataJson = new KeyValueStorageJson('./storage/KeyValueStorage.json');
 $dataJson->set('monday',10);
 $dataJson->set('tuesday',24);
 $dataJson->set('wednesday',54);
