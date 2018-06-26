@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace App\Storage;
 
@@ -11,23 +10,19 @@ class KeyValueStorage implements KeyValueStorageInterface
 
     public function set(string $key, $value): void
     {
-        $this->storage[$key] = $value;
+        if (!isset($this->storage[$key])) {
+            $this->storage[$key] = $value;
+        }
     }
 
     public function get(string $key)
     {
-        if (isset($this->storage[$key])) {
-            return $this->storage[$key];
-        }
+        return $this->storage[$key] ?? null;
     }
 
     public function has(string $key): bool
     {
-        if (isset($this->storage[$key])){
-            return true;
-        }
-
-        return false;
+        return isset($this->storage[$key]);
     }
 
     public function remove(string $key): void
