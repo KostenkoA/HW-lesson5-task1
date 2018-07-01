@@ -3,52 +3,18 @@ declare(strict_types=1);
 
 namespace App\Storage;
 
-class KeyValueStorageJson implements KeyValueStorageInterface
-{
-    private $jsonStorage = [];
-    private $jsonPath;
+class KeyValueStorageJson extends AbstractKeyValueStorage {
 
-    public function __construct(string $jsonPath)
+    protected function update($data): void
     {
-        $this->jsonPath = $jsonPath;
+        $json = \json_encode($data);
+        \file_put_contents($this->path, $json, \LOCK_EX);
     }
 
-    public function set(string $key, $value): void
+    protected function load(): array
     {
-        $this->jsonStorage[$key] = $value;
-        \file_put_contents($this->jsonPath,\json_encode($this->jsonStorage));
-    }
-
-    public function get(string $key)
-    {
-        $dataObject = \json_decode(\file_get_contents($this->jsonPath));
-        if (isset($dataObject->{$key})){
-            return $dataObject->{$key};
-        }
-    }
-
-    public function has(string $key): bool
-    {
-        $dataObject = \json_decode(\file_get_contents($this->jsonPath));
-        if (isset($dataObject->{$key})){
-            return true;
-        }
-
-        return false;
-    }
-
-    public function remove(string $key): void
-    {
-        $dataObject = \json_decode(\file_get_contents($this->jsonPath));
-        if (isset($dataObject->{$key})){
-            unset($dataObject->{$key});
-            \file_put_contents($this->jsonPath,\json_encode($dataObject));
-        }
-
-    }
-
-    public function clear(): void
-    {
-        \file_put_contents($this->jsonPath,\json_encode($this->jsonStorage = []));
+        $dataObject = \file_get_contents($this->path);
+        $data = \json_decode(($dataObject), true);
+        return \is_array($data) ? $data : [];
     }
 }

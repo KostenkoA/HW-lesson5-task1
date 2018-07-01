@@ -5,51 +5,17 @@ namespace App\Storage;
 
 use Symfony\Component\Yaml\Yaml;
 
-class KeyValueStorageYaml implements KeyValueStorageInterface
+class KeyValueStorageYaml extends AbstractKeyValueStorage
 {
-    private $yamlStorage = [];
-    private $yamlPath;
-
-    public function __construct(string $yamlPath)
+    protected function update($data): void
     {
-        $this->yamlPath = $yamlPath;
+        file_put_contents($this->path,Yaml::dump($data), \LOCK_EX);
     }
 
-    public function set(string $key, $value): void
+    protected function load(): array
     {
-        $this->yamlStorage[$key]=$value;
-        file_put_contents($this->yamlPath,Yaml::dump($this->yamlStorage));
-    }
+        $yaml = Yaml::parseFile($this->path);
 
-    public function get(string $key)
-    {
-        $parse = Yaml::parseFile($this->yamlPath);
-        if (isset($parse[$key])){
-            return $parse[$key];
-        }
-    }
-
-    public function has(string $key): bool
-    {
-        $parse = Yaml::parseFile($this->yamlPath);
-        if (isset($parse[$key])) {
-            return true;
-        }
-        return false;
-    }
-
-    public function remove(string $key): void
-    {
-        $parse = Yaml::parseFile($this->yamlPath);
-        if (isset($parse[$key])){
-            unset ($parse[$key]);
-            $yaml = Yaml::dump($parse);
-            file_put_contents($this->yamlPath,$yaml);
-        }
-    }
-
-    public function clear(): void
-    {
-        file_put_contents($this->yamlPath,Yaml::dump($this->yamlStorage=[]));
+        return \is_array($yaml) ? $yaml : [];
     }
 }

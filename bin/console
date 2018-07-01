@@ -1,6 +1,5 @@
 #!/usr/bin/env php
 <?php
-declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -9,7 +8,7 @@ use App\Storage\{
     KeyValueStorageYaml,
     KeyValueStorageJson
 };
-
+/*
 //memory storage
 $data = new KeyValueStorage();
 $data->set('monday',1);
@@ -22,7 +21,7 @@ $data->remove('monday');
 var_dump($data);
 //$data->clear();
 //var_dump($data);
-
+*/
 //Yaml storage
 $dataYaml = new KeyValueStorageYaml('./storage/KeyValueStorage.yaml');
 $dataYaml->set('monday',410);
@@ -30,15 +29,19 @@ $dataYaml->set('tuesday',131);
 $dataYaml->set('wednesday',555);
 var_dump($dataYaml->get('monday'));
 var_dump($dataYaml->has('wednesday'));
-$dataYaml->remove('monday');
-$dataYaml->clear();
 
+$dataYaml->remove('tuesday');
+/*
+$dataYaml->clear();
+*/
+/*
 //Json storage
 $dataJson = new KeyValueStorageJson('./storage/KeyValueStorage.json');
-$dataJson->set('monday',10);
-$dataJson->set('tuesday',24);
-$dataJson->set('wednesday',54);
+$dataJson->set('monday',100);
+$dataJson->set('tuesday',240);
+$dataJson->set('wednesday',540);
 var_dump($dataJson->get('tuesday'));
 var_dump($dataJson->has('monday'));
 $dataJson->remove('wednesday');
-$dataJson->clear();
+//$dataJson->clear();
+*/
