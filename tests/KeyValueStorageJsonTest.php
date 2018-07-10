@@ -6,7 +6,6 @@ use App\Storage\KeyValueStorageInterface;
 use App\Storage\KeyValueStorageJson;
 use PHPUnit\Framework\TestCase;
 
-
 class KeyValueStorageJsonTest extends TestCase
 {
     private const STORAGE_FILE = __DIR__ . '/../storage/KeyValueStorage.json';
@@ -35,13 +34,20 @@ class KeyValueStorageJsonTest extends TestCase
     public function testSet()
     {
         $this->storage->set('banana', 25);
-        self::assertEquals(25, $this->storage->get('banana'));
+        self::assertEquals(
+            25,
+            $this->storage->get('banana'),
+            'Method should save a value to the storage'
+        );
     }
 
     public function testGet()
     {
         $this->storage->set('chery', 55);
         self::assertEquals(55, $this->storage->get('chery'));
+        self::assertNull($this->storage->get('unknown'),
+            'If key does not exist - method should return null'
+        );
     }
 
     public function testHas()
@@ -71,10 +77,13 @@ class KeyValueStorageJsonTest extends TestCase
 
         //self::assertEquals(2, $this->storage->get('dog'));
         //self::assertTrue($this->storage->has('cat'));
-        self::assertFalse($this->storage->has('snake'));
+        self::assertFalse(
+            $this->storage->has('snake'),
+            'Method clear should remove all values from the storage'
+        );
     }
 
-    public function removeDataProvider()
+    public function removeDataProvider(): iterable
     {
         yield ['a', 1];
         yield ['b', 3];
